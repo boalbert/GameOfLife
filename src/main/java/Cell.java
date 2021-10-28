@@ -1,3 +1,3 @@
-public record Cell(int status, int row, int col) {
+public record Cell(int row, int col) {
 
 }
