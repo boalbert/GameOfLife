@@ -29,6 +29,12 @@ class GameOfLifeTest {
         assertEquals(3, gameOfLife.getAliveCells().size());
     }
 
+    @Test
+    void NotCellsAliveAndCheckingForAliveCellsReturnsEmptyList() {
+        GameOfLife gameOfLife = new GameOfLife();
+        assertTrue(gameOfLife.getAliveCells().isEmpty());
+    }
+
 
 
 }
