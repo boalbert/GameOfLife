@@ -6,7 +6,6 @@ public class GameOfLife {
 
     public boolean setAlive(int row, int col) {
         if(!aliveCells.contains(new Cell(1, row, col))){
-            System.out.println("Unique");
             return aliveCells.add(new Cell(1, row, col));
         }
         System.out.println("Not unique");

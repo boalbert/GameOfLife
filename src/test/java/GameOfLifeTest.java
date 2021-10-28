@@ -5,20 +5,30 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameOfLifeTest {
 
     @Test
-    void setAlive() {
+    void SetAliveCellWhereThereExistsNoCellReturnsTrue() {
         GameOfLife gameOfLife = new GameOfLife();
 
         assertTrue(gameOfLife.setAlive(1, 2));
     }
 
     @Test
-    void getAliveCells() {
+    void WhenAddingACellWhereThereAlreadyExistsACellReturnFalse() {
         GameOfLife gameOfLife = new GameOfLife();
-        gameOfLife.setAlive(1, 1);
-        gameOfLife.setAlive(1, 1);
-        gameOfLife.setAlive(1, 1);
-
-        assertEquals(1, gameOfLife.getAliveCells().size());
+        gameOfLife.setAlive(1, 2);
+        assertFalse(gameOfLife.setAlive(1, 2));
     }
+
+    @Test
+    void AddingThreeAliveCellsInUniquePlacesAddsThreeCellsToList() {
+        GameOfLife gameOfLife = new GameOfLife();
+
+        gameOfLife.setAlive(1, 1);
+        gameOfLife.setAlive(2, 1);
+        gameOfLife.setAlive(3, 1);
+
+        assertEquals(3, gameOfLife.getAliveCells().size());
+    }
+
+
 
 }
