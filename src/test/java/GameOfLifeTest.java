@@ -65,6 +65,14 @@ class GameOfLifeTest {
     }
 
     @Test
+    void GivenAliveCellAndSettingItDeadShouldMakeTileDead() {
+        Board board = new Board(5, 5);
+        board.setTileAlive(3, 3);
+        board.setTileDead(3, 3);
+        assertFalse(board.isAlive(3, 3));
+    }
+
+    @Test
     void CellWithZeroNeighboursDiesInNextGeneration() {
         Board board = new Board(5, 5);
         board.setTileAlive(3, 3);

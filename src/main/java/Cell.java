@@ -9,6 +9,10 @@ public class Cell {
     }
 
     public void setAlive() {
-        alive = true;
+        this.alive = true;
+    }
+
+    public void setDead() {
+        this.alive = false;
     }
 }

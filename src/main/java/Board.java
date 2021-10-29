@@ -16,7 +16,7 @@ public class Board {
         return rows;
     }
 
-    public int columns() {
+    public int cols() {
         return columns;
     }
 
@@ -27,7 +27,7 @@ public class Board {
     private Cell[][] createCells() {
         Cell[][] cells = new Cell[rows][columns];
         for (int rowIndex = 0; rowIndex < rows(); rowIndex++) {
-            for (int columnIndex = 0; columnIndex < columns(); columnIndex++) {
+            for (int columnIndex = 0; columnIndex < cols(); columnIndex++) {
                 cells[rowIndex][columnIndex] = new Cell();
             }
         }
@@ -36,6 +36,10 @@ public class Board {
 
     public void setTileAlive(int row, int col) {
         cells[row][col].setAlive();
+    }
+
+    public void setTileDead(int row, int col) {
+        cells[row][col].setDead();
     }
 
     public Cell getCell(int row, int col) {
@@ -67,5 +71,18 @@ public class Board {
                 .stream()
                 .filter(Cell::isAlive)
                 .count();
+    }
+
+    public void nextGeneration() {
+        for (int rowIndex = 0; rowIndex < rows(); rowIndex++) {
+            for (int colIndex = 0; colIndex < cols(); colIndex++) {
+                if (getCell(rowIndex, colIndex).isAlive()) {
+                    int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
+                    if (aliveNeighbours == 0) {
+                        setTileDead(rowIndex, colIndex);
+                    }
+                }
+            }
+        }
     }
 }
