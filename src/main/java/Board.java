@@ -79,9 +79,10 @@ public class Board {
             for (int colIndex = 0; colIndex < cols(); colIndex++) {
                 if (getCell(rowIndex, colIndex).isAlive()) {
                     int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
-                    if (aliveNeighbours == 0) {
-                        setTileDead(rowIndex, colIndex);
-                    }
+                    System.out.println(rowIndex + ", " + colIndex + " - aliveNeighbours: " + aliveNeighbours);
+//                    if (aliveNeighbours == 0 || aliveNeighbours > 3) {
+//                        setTileDead(rowIndex, colIndex);
+//                    }
                 }
             }
         }
