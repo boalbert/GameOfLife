@@ -53,9 +53,7 @@ class GameOfLifeTest {
 
         board.setTileAlive(0, 0);
 
-        board.setTileAlive(2, 2);
-        board.setTileAlive(2, 3);
-        assertEquals(2, board.getAliveNeighbours(3, 3));
+        assertEquals(0, board.getAliveNeighbours(3, 3));
     }
 
     @Test
@@ -67,6 +65,7 @@ class GameOfLifeTest {
     @Test
     void GivenAliveCellAndSettingItDeadShouldMakeTileDead() {
         Board board = new Board(5, 5);
+
         board.setTileAlive(3, 3);
         board.setTileDead(3, 3);
         assertFalse(board.isAlive(3, 3));
@@ -75,8 +74,25 @@ class GameOfLifeTest {
     @Test
     void CellWithZeroNeighboursDiesInNextGeneration() {
         Board board = new Board(5, 5);
+
         board.setTileAlive(3, 3);
         board.nextGeneration();
+        assertFalse(board.isAlive(3, 3));
+    }
+
+    @Test
+    void CellWithMoreThanThreeNeighboursDiesInTheNextGeneration() {
+        Board board = new Board(8, 8);
+
+        board.setTileAlive(3, 3);
+
+        board.setTileAlive(2, 2);
+        board.setTileAlive(2, 3);
+        board.setTileAlive(2, 4);
+        board.setTileAlive(3, 2);
+
+        board.nextGeneration();
+
         assertFalse(board.isAlive(3, 3));
     }
 }

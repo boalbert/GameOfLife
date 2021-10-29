@@ -47,6 +47,7 @@ public class Board {
     }
 
     public List<Cell> getNeighbours(int row, int col) {
+
         int north = row - 1;
         int east = col + 1;
         int south = row + 1;
