@@ -39,6 +39,10 @@ class GameOfLifeTest {
     @Test
     void BoardTilesAreInitializedToZero(){
         Board board = new Board(8, 8);
-        assertEquals(0, board.tiles[5][5]);
+
+        assertFalse(board.isAlive(5, 5));
+        assertFalse(board.isAlive(2,3));
+        assertFalse(board.isAlive(2,1));
+        assertFalse(board.isAlive(2,6));
     }
 }
