@@ -68,8 +68,4 @@ public class Board {
                 .filter(Cell::isAlive)
                 .count();
     }
-
-    // for loop genom endast levande celler
-    // if cell.getAliveNeighbours == 2
-        // cell.setDead()
 }

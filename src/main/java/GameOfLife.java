@@ -1,7 +1,7 @@
 import com.sun.jdi.BooleanType;
 
 public class GameOfLife {
-    private Board board;
+    private final Board board;
 
     public GameOfLife(int rows, int columns) {
         this.board = new Board(rows, columns);
