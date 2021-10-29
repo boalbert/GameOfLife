@@ -37,8 +37,8 @@ class GameOfLifeTest {
     }
 
     @Test
-    void StartingBoardShouldOnlyContainDeadCells(){
+    void BoardTilesAreInitializedToZero(){
         Board board = new Board(8, 8);
-        
+        assertEquals(0, board.tiles[5][5]);
     }
 }
