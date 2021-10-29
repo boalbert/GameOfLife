@@ -3,6 +3,8 @@ import java.util.List;
 
 public class GameOfLife {
 
+    public Board board;
+
     private final List<Cell> aliveCells = new ArrayList<>();
 
     public boolean setAlive(int row, int col) {

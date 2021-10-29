@@ -38,6 +38,7 @@ class GameOfLifeTest {
 
     @Test
     void StartingBoardShouldOnlyContainDeadCells(){
-        Board board = new Board();
+        Board board = new Board(8, 8);
+        
     }
 }
