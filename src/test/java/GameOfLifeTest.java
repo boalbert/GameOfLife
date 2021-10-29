@@ -15,6 +15,7 @@ class GameOfLifeTest {
     void WhenAddingACellWhereThereAlreadyExistsACellReturnFalse() {
         GameOfLife gameOfLife = new GameOfLife();
         gameOfLife.setAlive(1, 2);
+
         assertFalse(gameOfLife.setAlive(1, 2));
     }
 
@@ -30,11 +31,8 @@ class GameOfLifeTest {
     }
 
     @Test
-    void NotCellsAliveAndCheckingForAliveCellsReturnsEmptyList() {
+    void NoCellsAliveAndCheckingForAliveCellsReturnsEmptyList() {
         GameOfLife gameOfLife = new GameOfLife();
         assertTrue(gameOfLife.getAliveCells().isEmpty());
     }
-
-
-
 }
