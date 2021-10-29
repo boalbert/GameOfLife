@@ -1,15 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class GameOfLife {
 
     private final List<Cell> aliveCells = new ArrayList<>();
 
     public boolean setAlive(int row, int col) {
-        if(aliveCells.contains(new Cell(true, row, col)))
-            return false;
+        if(aliveCells.contains(new Cell(true, row, col))) {
+           return false;
+        }
         return aliveCells.add(new Cell(true, row, col));
     }
 

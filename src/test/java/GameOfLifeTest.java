@@ -35,4 +35,9 @@ class GameOfLifeTest {
         GameOfLife gameOfLife = new GameOfLife();
         assertTrue(gameOfLife.getAliveCells().isEmpty());
     }
+
+    @Test
+    void StartingBoardShouldOnlyContainDeadCells(){
+        Board board = new Board();
+    }
 }
