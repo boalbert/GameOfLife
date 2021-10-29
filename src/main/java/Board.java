@@ -74,17 +74,41 @@ public class Board {
                 .count();
     }
 
-    public void nextGeneration() {
+    private boolean[][] calculateNextState() {
+        boolean[][] nextState = new boolean[rows()][cols()];
+
+        // Loop through every row
+        for (int rowIndex = 0; rowIndex < rows(); rowIndex++) {
+            // Loop trough every column
+            for (int colIndex = 0; colIndex < cols(); colIndex++) {
+
+                Cell cell = getCell(rowIndex, colIndex);
+                int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
+                boolean isAliveInNextState =
+                        cell.isAlive() && aliveNeighbours == 2 || aliveNeighbours == 3;
+                nextState[rowIndex][colIndex] = isAliveInNextState;
+
+            }
+        }
+        return nextState;
+    }
+
+    public boolean[][] nextGeneration() {
+        boolean[][] nextState = new boolean[rows()][cols()];
+
         for (int rowIndex = 0; rowIndex < rows(); rowIndex++) {
             for (int colIndex = 0; colIndex < cols(); colIndex++) {
-                if (getCell(rowIndex, colIndex).isAlive()) {
-                    int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
-                    System.out.println(rowIndex + ", " + colIndex + " - aliveNeighbours: " + aliveNeighbours);
-//                    if (aliveNeighbours == 0 || aliveNeighbours > 3) {
-//                        setTileDead(rowIndex, colIndex);
-//                    }
+
+                var currentCell = getCell(rowIndex, colIndex);
+                int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
+
+                if (currentCell.isAlive()) {
+                    if (aliveNeighbours == 2 || aliveNeighbours == 3) {
+                        nextState[rowIndex][colIndex] = true;
+                    }
                 }
             }
         }
+        return nextState;
     }
 }
