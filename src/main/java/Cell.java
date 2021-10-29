@@ -7,4 +7,8 @@ public class Cell {
     public boolean isAlive() {
         return alive;
     }
+
+    public void setAlive() {
+        alive = true;
+    }
 }

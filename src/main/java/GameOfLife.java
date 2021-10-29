@@ -1,16 +1,15 @@
-import java.util.ArrayList;
-import java.util.List;
+import com.sun.jdi.BooleanType;
 
 public class GameOfLife {
+    private Board board;
 
-    public Board board;
-
-    private final List<Cell> aliveCells = new ArrayList<>();
-
-    public List<Cell> getAliveCells() {
-        return List.copyOf(aliveCells);
+    public GameOfLife(int rows, int columns) {
+        this.board = new Board(rows, columns);
     }
 
+    public Board board() {
+        return board;
+    }
     /*
     Ideas:
     - When program is started ask user what size of grid it is
