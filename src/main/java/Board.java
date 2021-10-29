@@ -93,7 +93,7 @@ public class Board {
         return nextState;
     }
 
-    public boolean[][] nextGeneration() {
+    public boolean[][] calculateNextGeneration() {
         boolean[][] nextState = new boolean[rows()][cols()];
 
         for (int rowIndex = 0; rowIndex < rows(); rowIndex++) {

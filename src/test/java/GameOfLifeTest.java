@@ -73,11 +73,11 @@ class GameOfLifeTest {
 
     @Test
     void CellWithZeroNeighboursDiesInNextGeneration() {
-        Board board = new Board(5, 5);
+        Board board = new Board(12, 12);
 
-        board.setTileAlive(3, 3);
-        board.nextGeneration();
-        assertFalse(board.isAlive(3, 3));
+        board.setTileAlive(5, 5);
+        boolean[][] booleans = board.calculateNextGeneration();
+        assertFalse(booleans[3][3]);
     }
 
     @Test
@@ -91,7 +91,7 @@ class GameOfLifeTest {
         board.setTileAlive(2, 4);
         board.setTileAlive(3, 2);
 
-        board.nextGeneration();
+        board.calculateNextGeneration();
 
         assertFalse(board.isAlive(3, 3));
     }
