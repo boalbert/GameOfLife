@@ -5,8 +5,8 @@ public class Cell {
     int row;
     int col;
 
-    public Cell(boolean alive, int row, int col) {
-        this.alive = alive;
+    public Cell(int row, int col) {
+        this.alive = false;
         this.row = row;
         this.col = col;
     }

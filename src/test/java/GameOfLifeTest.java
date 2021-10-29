@@ -45,4 +45,5 @@ class GameOfLifeTest {
         assertFalse(board.isAlive(2,1));
         assertFalse(board.isAlive(2,6));
     }
+
 }
