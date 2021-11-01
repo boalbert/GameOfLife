@@ -8,12 +8,8 @@ public class Cell {
         this.alive = alive;
     }
 
-    public boolean isAlive() {
+    public boolean alive() {
         return alive;
-    }
-
-    public void setAlive() {
-        this.alive = true;
     }
 
     public void setDead() {

@@ -13,7 +13,7 @@ class GameOfLifeTest {
     @Test
     void SettingCellAliveReturnsTrueWhenCheckingIsAliveOnCell() {
         Board board = new Board(6, 6);
-        board.setTileAlive(2, 2);
+        board.insertLivingCell(2, 2);
         assertTrue(board.isAlive(2, 2));
     }
 
@@ -33,17 +33,17 @@ class GameOfLifeTest {
     @Test
     void SettingOneNeighbourAliveShouldReturnOneAliveNeighbour() {
         Board board = new Board(12, 15);
-        board.setTileAlive(4, 5);
+        board.insertLivingCell(4, 5);
         assertEquals(1, board.getAliveNeighbours(5, 5));
     }
 
     @Test
     void SettingFourAliveNeighboursShouldReturnFourAliveNeighbours() {
         Board board = new Board(12, 15);
-        board.setTileAlive(2, 2);
-        board.setTileAlive(2, 3);
-        board.setTileAlive(2, 4);
-        board.setTileAlive(3, 2);
+        board.insertLivingCell(2, 2);
+        board.insertLivingCell(2, 3);
+        board.insertLivingCell(2, 4);
+        board.insertLivingCell(3, 2);
         assertEquals(4, board.getAliveNeighbours(3, 3));
     }
 
@@ -51,7 +51,7 @@ class GameOfLifeTest {
     void SettingCellAliveThatIsNotANeighbourShouldNotCountAsAliveNeighbour() {
         Board board = new Board(12, 15);
 
-        board.setTileAlive(0, 0);
+        board.insertLivingCell(0, 0);
 
         assertEquals(0, board.getAliveNeighbours(3, 3));
     }
@@ -66,7 +66,7 @@ class GameOfLifeTest {
     void GivenAliveCellAndSettingItDeadShouldMakeTileDead() {
         Board board = new Board(5, 5);
 
-        board.setTileAlive(3, 3);
+        board.insertLivingCell(3, 3);
         board.setTileDead(3, 3);
         assertFalse(board.isAlive(3, 3));
     }
@@ -75,7 +75,7 @@ class GameOfLifeTest {
     void CellWithZeroNeighboursDiesInNextGeneration() {
         Board board = new Board(12, 12);
 
-        board.setTileAlive(5, 5);
+        board.insertLivingCell(5, 5);
         boolean[][] booleans = board.calculateNextGeneration();
         assertFalse(booleans[3][3]);
     }
@@ -84,12 +84,12 @@ class GameOfLifeTest {
     void CellWithMoreThanThreeNeighboursDiesInTheNextGeneration() {
         Board board = new Board(8, 8);
 
-        board.setTileAlive(3, 3);
+        board.insertLivingCell(3, 3);
 
-        board.setTileAlive(2, 2);
-        board.setTileAlive(2, 3);
-        board.setTileAlive(2, 4);
-        board.setTileAlive(3, 2);
+        board.insertLivingCell(2, 2);
+        board.insertLivingCell(2, 3);
+        board.insertLivingCell(2, 4);
+        board.insertLivingCell(3, 2);
 
         board.calculateNextGeneration();
 

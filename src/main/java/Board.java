@@ -21,7 +21,7 @@ public class Board {
     }
 
     public boolean isAlive(int row, int col) {
-        return cells[row][col].isAlive();
+        return cells[row][col].alive();
     }
 
     private Cell[][] createCells() {
@@ -34,12 +34,12 @@ public class Board {
         return cells;
     }
 
-    public void setTileAlive(int row, int col) {
+    public void insertLivingCell(int row, int col) {
         cells[row][col] = new Cell(true);
     }
 
-    public void insertAliveCell(int row, int col) {
-
+    public void insertDeadCell(int row, int col) {
+        cells[row][col] = new Cell();
     }
 
     public void setTileDead(int row, int col) {
@@ -74,7 +74,7 @@ public class Board {
     public int getAliveNeighbours(int row, int col) {
         return (int) getNeighbours(row, col)
                 .stream()
-                .filter(Cell::isAlive)
+                .filter(Cell::alive)
                 .count();
     }
 
@@ -89,7 +89,7 @@ public class Board {
                 Cell cell = getCell(rowIndex, colIndex);
                 int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
                 boolean isAliveInNextState =
-                        cell.isAlive() && aliveNeighbours == 2 || aliveNeighbours == 3;
+                        cell.alive() && aliveNeighbours == 2 || aliveNeighbours == 3;
                 nextState[rowIndex][colIndex] = isAliveInNextState;
 
             }
@@ -106,7 +106,7 @@ public class Board {
                 var currentCell = getCell(rowIndex, colIndex);
                 int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
 
-                if (currentCell.isAlive()) {
+                if (currentCell.alive()) {
                     if (aliveNeighbours == 2 || aliveNeighbours == 3) {
                         nextState[rowIndex][colIndex] = true;
                     }
