@@ -5,7 +5,7 @@ public record Point(int row, int col) {
         return !(row() < 0 || row() >= maxRows || col() < 0 || col() >= maxColumns);
     }
 
-    private List<Point> neighbours(Point point) {
+    public List<Point> neighbours(Point point) {
         return List.of(
                 new Point(point.row() - 1, point.col() - 1),
                 new Point(point.row() - 1, point.col()),
@@ -19,5 +19,12 @@ public record Point(int row, int col) {
                 new Point(point.row() + 1, point.col() + 1)
         );
     }
-    
+
+    public List<Point> neighboursInsideGrid(Point point, int maxRows, int maxColumns) {
+        return neighbours(point).stream()
+                .filter(p -> p.isInside(maxRows, maxColumns))
+                .toList();
+    }
+
+
 }
