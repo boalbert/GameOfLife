@@ -28,7 +28,7 @@ public class Board {
         Cell[][] cells = new Cell[rows][columns];
         for (int rowIndex = 0; rowIndex < rows(); rowIndex++) {
             for (int columnIndex = 0; columnIndex < cols(); columnIndex++) {
-                cells[rowIndex][columnIndex] = new Cell();
+                cells[rowIndex][columnIndex] = new Cell(false);
             }
         }
         return cells;
@@ -39,7 +39,7 @@ public class Board {
     }
 
     public void insertDeadCell(int row, int col) {
-        cells[row][col] = new Cell();
+        cells[row][col] = new Cell(false);
     }
 
     public Cell getCell(int row, int col) {
