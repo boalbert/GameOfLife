@@ -35,7 +35,11 @@ public class Board {
     }
 
     public void setTileAlive(int row, int col) {
-        cells[row][col].setAlive();
+        cells[row][col] = new Cell(true);
+    }
+
+    public void insertAliveCell(int row, int col) {
+
     }
 
     public void setTileDead(int row, int col) {
