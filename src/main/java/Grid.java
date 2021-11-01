@@ -1,6 +1,3 @@
-import java.util.Arrays;
-import java.util.List;
-
 public class Grid {
     private final Cell[][] cells;
     private final int rows;
@@ -42,31 +39,10 @@ public class Grid {
         return cells[point.row()][point.col()];
     }
 
-    public List<Cell> getNeighbours(Point point) {
-
-        int north = point.row() - 1;
-        int east = point.col() + 1;
-        int south = point.row() + 1;
-        int west = point.col() - 1;
-
-
-        return Arrays.asList(
-                getCell(new Point(north, west)),
-                getCell(new Point(north, point.col())),
-                getCell(new Point(north, east)),
-
-                getCell(new Point(point.row(), west)),
-                getCell(new Point(point.row(), east)),
-
-                getCell(new Point(south, west)),
-                getCell(new Point(south, point.col())),
-                getCell(new Point(south, east))
-        );
-    }
-
-    public int getAliveNeighbours(Point point) {
-        return (int) getNeighbours(new Point(point.row(), point.col()))
+    public int countAliveNeighbours(Point point) {
+        return (int) point.neighboursInsideGrid(point, numberOfRows(), numberOfColumns())
                 .stream()
+                .map(this::getCell)
                 .filter(Cell::alive)
                 .count();
     }
@@ -80,7 +56,7 @@ public class Grid {
             for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
 
                 Cell cell = getCell(new Point(rowIndex, colIndex));
-                int aliveNeighbours = getAliveNeighbours(new Point(rowIndex, colIndex));
+                int aliveNeighbours = countAliveNeighbours(new Point(rowIndex, colIndex));
                 boolean isAliveInNextState =
                         cell.alive() && aliveNeighbours == 2 || aliveNeighbours == 3;
                 nextState[rowIndex][colIndex] = isAliveInNextState;
@@ -97,7 +73,7 @@ public class Grid {
             for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
 
                 var currentCell = getCell(new Point(rowIndex, colIndex));
-                int aliveNeighbours = getAliveNeighbours(new Point(rowIndex, colIndex));
+                int aliveNeighbours = countAliveNeighbours(new Point(rowIndex, colIndex));
 
                 if (currentCell.alive()) {
                     if (aliveNeighbours == 2 || aliveNeighbours == 3) {

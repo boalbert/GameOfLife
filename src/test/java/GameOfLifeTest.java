@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,18 +65,12 @@ class GameOfLifeTest {
         assertTrue(grid.getCell(point).alive());
     }
 
-    @Test
-    void EveryCellHasEightNeighbours() {
-        Grid grid = new Grid(8, 8);
-        var point = new Point(5, 5);
-        assertEquals(8, grid.getNeighbours(point).size());
-    }
 
     @Test
     void InitiallyEveryCellHasZeroAliveNeighbours() {
         Grid grid = new Grid(12, 15);
         var point = new Point(5, 5);
-        assertEquals(0, grid.getAliveNeighbours(point));
+        assertEquals(0, grid.countAliveNeighbours(point));
     }
 
     @Test
@@ -88,7 +81,7 @@ class GameOfLifeTest {
         grid.insertLivingCell(pointLivingCell);
 
         var pointDeadCell = new Point(5, 5);
-        assertEquals(1, grid.getAliveNeighbours(pointDeadCell));
+        assertEquals(1, grid.countAliveNeighbours(pointDeadCell));
     }
 
     @Test
@@ -100,7 +93,7 @@ class GameOfLifeTest {
         grid.insertLivingCell(new Point(2, 4));
         grid.insertLivingCell(new Point(3, 2));
 
-        assertEquals(4, grid.getAliveNeighbours(new Point(3, 3)));
+        assertEquals(4, grid.countAliveNeighbours(new Point(3, 3)));
     }
 
     @Test
@@ -109,7 +102,7 @@ class GameOfLifeTest {
 
         grid.insertLivingCell(new Point(0, 0));
 
-        assertEquals(0, grid.getAliveNeighbours(new Point(3, 3)));
+        assertEquals(0, grid.countAliveNeighbours(new Point(3, 3)));
     }
 
     @Test
@@ -131,7 +124,6 @@ class GameOfLifeTest {
     }
 
     @Test
-    @Disabled
     void CellWithZeroNeighboursDiesInNextGeneration() {
         Grid grid = new Grid(12, 12);
 
@@ -141,7 +133,6 @@ class GameOfLifeTest {
     }
 
     @Test
-    @Disabled
     void CellWithMoreThanThreeNeighboursDiesInTheNextGeneration() {
         Grid grid = new Grid(8, 8);
 
