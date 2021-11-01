@@ -8,34 +8,41 @@ class GameOfLifeTest {
     @Test
     void BoardTilesAreInitializedToZero() {
         Board board = new Board(8, 8);
-        assertFalse(board.getCell(new Point(5, 5)).alive());
+        var point = new Point(5, 5);
+        assertFalse(board.getCell(point).alive());
     }
 
     @Test
     void SettingCellAliveReturnsTrueWhenCheckingIsAliveOnCell() {
         Board board = new Board(6, 6);
-        board.insertLivingCell(new Point(2, 2));
-        assertTrue(board.getCell(new Point(2, 2)).alive());
+        var point = new Point(2, 2);
+        board.insertLivingCell(point);
+        assertTrue(board.getCell(point).alive());
     }
 
     @Test
     void EveryCellHasEightNeighbours() {
         Board board = new Board(8, 8);
-
-        assertEquals(8, board.getNeighbours(new Point(5, 5)).size());
+        var point = new Point(5, 5);
+        assertEquals(8, board.getNeighbours(point).size());
     }
 
     @Test
     void InitiallyEveryCellHasZeroAliveNeighbours() {
         Board board = new Board(12, 15);
-        assertEquals(0, board.getAliveNeighbours(new Point(5, 5)));
+        var point = new Point(5, 5);
+        assertEquals(0, board.getAliveNeighbours(point));
     }
 
     @Test
     void SettingOneNeighbourAliveShouldReturnOneAliveNeighbour() {
         Board board = new Board(12, 15);
-        board.insertLivingCell(new Point(4, 5));
-        assertEquals(1, board.getAliveNeighbours(new Point(5, 5)));
+
+        var pointLivingCell = new Point(4, 5);
+        board.insertLivingCell(pointLivingCell);
+
+        var pointDeadCell = new Point(5, 5);
+        assertEquals(1, board.getAliveNeighbours(pointDeadCell));
     }
 
     @Test
@@ -67,9 +74,12 @@ class GameOfLifeTest {
     void GivenAliveCellAndSettingItDeadShouldMakeTileDead() {
         Board board = new Board(5, 5);
 
-        board.insertLivingCell(new Point(3, 3));
-        board.insertDeadCell(new Point(3, 3));
-        assertFalse(board.getCell(new Point(3, 3)).alive());
+        var point = new Point(3, 3);
+
+        board.insertLivingCell(point);
+        board.insertDeadCell(point);
+
+        assertFalse(board.getCell(point).alive());
     }
 
     @Test
