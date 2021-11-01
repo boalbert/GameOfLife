@@ -30,41 +30,41 @@ public class Board {
         return cells;
     }
 
-    public void insertLivingCell(int row, int col) {
-        cellGrid[row][col] = new Cell(true);
+    public void insertLivingCell(Point point) {
+        cellGrid[point.row()][point.col()] = new Cell(true);
     }
 
-    public void insertDeadCell(int row, int col) {
-        cellGrid[row][col] = new Cell(false);
+    public void insertDeadCell(Point point) {
+        cellGrid[point.row()][point.col()] = new Cell(false);
     }
 
-    public Cell getCell(int row, int col) {
-        return cellGrid[row][col];
+    public Cell getCell(Point point) {
+        return cellGrid[point.row()][point.col()];
     }
 
-    public List<Cell> getNeighbours(int row, int col) {
+    public List<Cell> getNeighbours(Point point) {
 
-        int north = row - 1;
-        int east = col + 1;
-        int south = row + 1;
-        int west = col - 1;
+        int north = point.row() - 1;
+        int east = point.col() + 1;
+        int south = point.row() + 1;
+        int west = point.col() - 1;
 
         return Arrays.asList(
-                getCell(north, west),
-                getCell(north, col),
-                getCell(north, east),
+                getCell(new Point(north, west)),
+                getCell(new Point(north, point.col())),
+                getCell(new Point(north, east)),
 
-                getCell(row, west),
-                getCell(row, east),
+                getCell(new Point(point.row(), west)),
+                getCell(new Point(point.row(), east)),
 
-                getCell(south, west),
-                getCell(south, col),
-                getCell(south, east)
+                getCell(new Point(south, west)),
+                getCell(new Point(south, point.col())),
+                getCell(new Point(south, east))
         );
     }
 
-    public int getAliveNeighbours(int row, int col) {
-        return (int) getNeighbours(row, col)
+    public int getAliveNeighbours(Point point) {
+        return (int) getNeighbours(new Point(point.row(), point.col()))
                 .stream()
                 .filter(Cell::alive)
                 .count();
@@ -78,8 +78,8 @@ public class Board {
             // Loop trough every column
             for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
 
-                Cell cell = getCell(rowIndex, colIndex);
-                int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
+                Cell cell = getCell(new Point(rowIndex, colIndex));
+                int aliveNeighbours = getAliveNeighbours(new Point(rowIndex, colIndex));
                 boolean isAliveInNextState =
                         cell.alive() && aliveNeighbours == 2 || aliveNeighbours == 3;
                 nextState[rowIndex][colIndex] = isAliveInNextState;
@@ -95,8 +95,8 @@ public class Board {
         for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
             for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
 
-                var currentCell = getCell(rowIndex, colIndex);
-                int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
+                var currentCell = getCell(new Point(rowIndex, colIndex));
+                int aliveNeighbours = getAliveNeighbours(new Point(rowIndex, colIndex));
 
                 if (currentCell.alive()) {
                     if (aliveNeighbours == 2 || aliveNeighbours == 3) {
