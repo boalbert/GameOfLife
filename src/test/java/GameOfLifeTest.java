@@ -143,8 +143,8 @@ class GameOfLifeTest {
         grid.insertLivingCell(new Point(2, 4));
         grid.insertLivingCell(new Point(3, 2));
 
-        grid.calculateNextGeneration();
+        boolean[][] booleans = grid.calculateNextGeneration();
 
-        assertFalse(grid.getCell(new Point(3, 3)).alive());
+        assertFalse(booleans[3][3]);
     }
 }

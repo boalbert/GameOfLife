@@ -25,6 +25,4 @@ public record Point(int row, int col) {
                 .filter(p -> p.isInside(maxRows, maxColumns))
                 .toList();
     }
-
-
 }
