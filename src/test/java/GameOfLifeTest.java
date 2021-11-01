@@ -7,23 +7,21 @@ class GameOfLifeTest {
 
     @Test
     void GivenPointInTheMiddleOfGridReturnsTrue() {
-        Grid grid = new Grid(12, 12);
         var inTheMiddle = new Point(5, 5);
-        assertTrue(inTheMiddle.isInside(grid));
+        assertTrue(inTheMiddle.isInside(12, 12));
     }
 
     @Test
     void GivenPointOutsideGridReturnsFalse() {
-        Grid grid = new Grid(12, 12);
         var outside = new Point(14, 14);
-        assertFalse(outside.isInside(grid));
+        assertFalse(outside.isInside(12, 12));
     }
 
     @Test
     void GivenPointAtEdgeReturnsTrue() {
         Grid grid = new Grid(12, 12);
         var onEdge = new Point(12, 12);
-        assertFalse(onEdge.isInside(grid));
+        assertFalse(onEdge.isInside(12, 12));
     }
 
     @Test
@@ -69,10 +67,12 @@ class GameOfLifeTest {
     @Test
     void SettingFourAliveNeighboursShouldReturnFourAliveNeighbours() {
         Grid grid = new Grid(12, 15);
+
         grid.insertLivingCell(new Point(2, 2));
         grid.insertLivingCell(new Point(2, 3));
         grid.insertLivingCell(new Point(2, 4));
         grid.insertLivingCell(new Point(3, 2));
+
         assertEquals(4, grid.getAliveNeighbours(new Point(3, 3)));
     }
 

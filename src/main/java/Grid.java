@@ -49,6 +49,7 @@ public class Grid {
         int south = point.row() + 1;
         int west = point.col() - 1;
 
+
         return Arrays.asList(
                 getCell(new Point(north, west)),
                 getCell(new Point(north, point.col())),
