@@ -1,14 +1,12 @@
-import com.sun.jdi.BooleanType;
-
 public class GameOfLife {
-    private final Board board;
+    private final Grid grid;
 
     public GameOfLife(int rows, int columns) {
-        this.board = new Board(rows, columns);
+        this.grid = new Grid(rows, columns);
     }
 
-    public Board board() {
-        return board;
+    public Grid grid() {
+        return grid;
     }
     /*
     Ideas:

@@ -1,15 +1,15 @@
 import java.util.Arrays;
 import java.util.List;
 
-public class Board {
-    private final Cell[][] cellGrid;
+public class Grid {
+    private final Cell[][] cells;
     private final int rows;
     private final int columns;
 
-    public Board(int rows, int columns) {
+    public Grid(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        this.cellGrid = createCells();
+        this.cells = createCells();
     }
 
     public int numberOfRows() {
@@ -31,15 +31,15 @@ public class Board {
     }
 
     public void insertLivingCell(Point point) {
-        cellGrid[point.row()][point.col()] = new Cell(true);
+        cells[point.row()][point.col()] = new Cell(true);
     }
 
     public void insertDeadCell(Point point) {
-        cellGrid[point.row()][point.col()] = new Cell(false);
+        cells[point.row()][point.col()] = new Cell(false);
     }
 
     public Cell getCell(Point point) {
-        return cellGrid[point.row()][point.col()];
+        return cells[point.row()][point.col()];
     }
 
     public List<Cell> getNeighbours(Point point) {

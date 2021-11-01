@@ -6,106 +6,127 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameOfLifeTest {
 
     @Test
-    void BoardTilesAreInitializedToZero() {
-        Board board = new Board(8, 8);
+    void GivenPointInTheMiddleOfGridReturnsTrue() {
+        Grid grid = new Grid(12, 12);
+        var inTheMiddle = new Point(5, 5);
+        assertTrue(inTheMiddle.isInside(grid));
+    }
+
+    @Test
+    void GivenPointOutsideGridReturnsFalse() {
+        Grid grid = new Grid(12, 12);
+        var outside = new Point(14, 14);
+        assertFalse(outside.isInside(grid));
+    }
+
+    @Test
+    void GivenPointAtEdgeReturnsTrue() {
+        Grid grid = new Grid(12, 12);
+        var onEdge = new Point(12, 12);
+        assertFalse(onEdge.isInside(grid));
+    }
+
+    @Test
+    void GridTilesAreInitializedToZero() {
+        Grid grid = new Grid(8, 8);
         var point = new Point(5, 5);
-        assertFalse(board.getCell(point).alive());
+        assertFalse(grid.getCell(point).alive());
     }
 
     @Test
     void SettingCellAliveReturnsTrueWhenCheckingIsAliveOnCell() {
-        Board board = new Board(6, 6);
+        Grid grid = new Grid(6, 6);
         var point = new Point(2, 2);
-        board.insertLivingCell(point);
-        assertTrue(board.getCell(point).alive());
+        grid.insertLivingCell(point);
+        assertTrue(grid.getCell(point).alive());
     }
 
     @Test
     void EveryCellHasEightNeighbours() {
-        Board board = new Board(8, 8);
+        Grid grid = new Grid(8, 8);
         var point = new Point(5, 5);
-        assertEquals(8, board.getNeighbours(point).size());
+        assertEquals(8, grid.getNeighbours(point).size());
     }
 
     @Test
     void InitiallyEveryCellHasZeroAliveNeighbours() {
-        Board board = new Board(12, 15);
+        Grid grid = new Grid(12, 15);
         var point = new Point(5, 5);
-        assertEquals(0, board.getAliveNeighbours(point));
+        assertEquals(0, grid.getAliveNeighbours(point));
     }
 
     @Test
     void SettingOneNeighbourAliveShouldReturnOneAliveNeighbour() {
-        Board board = new Board(12, 15);
+        Grid grid = new Grid(12, 15);
 
         var pointLivingCell = new Point(4, 5);
-        board.insertLivingCell(pointLivingCell);
+        grid.insertLivingCell(pointLivingCell);
 
         var pointDeadCell = new Point(5, 5);
-        assertEquals(1, board.getAliveNeighbours(pointDeadCell));
+        assertEquals(1, grid.getAliveNeighbours(pointDeadCell));
     }
 
     @Test
     void SettingFourAliveNeighboursShouldReturnFourAliveNeighbours() {
-        Board board = new Board(12, 15);
-        board.insertLivingCell(new Point(2, 2));
-        board.insertLivingCell(new Point(2, 3));
-        board.insertLivingCell(new Point(2, 4));
-        board.insertLivingCell(new Point(3, 2));
-        assertEquals(4, board.getAliveNeighbours(new Point(3, 3)));
+        Grid grid = new Grid(12, 15);
+        grid.insertLivingCell(new Point(2, 2));
+        grid.insertLivingCell(new Point(2, 3));
+        grid.insertLivingCell(new Point(2, 4));
+        grid.insertLivingCell(new Point(3, 2));
+        assertEquals(4, grid.getAliveNeighbours(new Point(3, 3)));
     }
 
     @Test
     void SettingCellAliveThatIsNotANeighbourShouldNotCountAsAliveNeighbour() {
-        Board board = new Board(12, 15);
+        Grid grid = new Grid(12, 15);
 
-        board.insertLivingCell(new Point(0, 0));
+        grid.insertLivingCell(new Point(0, 0));
 
-        assertEquals(0, board.getAliveNeighbours(new Point(3, 3)));
+        assertEquals(0, grid.getAliveNeighbours(new Point(3, 3)));
     }
 
     @Test
     void GivenANewGameOfLifeObjectWith5RowsReturnsObjectWithAGridOfFiveRows() {
         GameOfLife gameOfLife = new GameOfLife(5, 5);
-        assertEquals(5, gameOfLife.board().numberOfRows());
+        assertEquals(5, gameOfLife.grid().numberOfRows());
     }
 
     @Test
     void GivenAliveCellAndSettingItDeadShouldMakeTileDead() {
-        Board board = new Board(5, 5);
+        Grid grid = new Grid(5, 5);
 
         var point = new Point(3, 3);
 
-        board.insertLivingCell(point);
-        board.insertDeadCell(point);
+        grid.insertLivingCell(point);
+        grid.insertDeadCell(point);
 
-        assertFalse(board.getCell(point).alive());
+        assertFalse(grid.getCell(point).alive());
     }
 
     @Test
     @Disabled
     void CellWithZeroNeighboursDiesInNextGeneration() {
-        Board board = new Board(12, 12);
+        Grid grid = new Grid(12, 12);
 
-        board.insertLivingCell(new Point(5, 5));
-        boolean[][] booleans = board.calculateNextGeneration();
+        grid.insertLivingCell(new Point(5, 5));
+        boolean[][] booleans = grid.calculateNextGeneration();
         assertFalse(booleans[3][3]);
     }
 
     @Test
     @Disabled
     void CellWithMoreThanThreeNeighboursDiesInTheNextGeneration() {
-        Board board = new Board(8, 8);
+        Grid grid = new Grid(8, 8);
 
-        board.insertLivingCell(new Point(3, 3));
+        grid.insertLivingCell(new Point(3, 3));
 
-        board.insertLivingCell(new Point(2, 2));
-        board.insertLivingCell(new Point(2, 3));
-        board.insertLivingCell(new Point(2, 4));
-        board.insertLivingCell(new Point(3, 2));
+        grid.insertLivingCell(new Point(2, 2));
+        grid.insertLivingCell(new Point(2, 3));
+        grid.insertLivingCell(new Point(2, 4));
+        grid.insertLivingCell(new Point(3, 2));
 
-        board.calculateNextGeneration();
+        grid.calculateNextGeneration();
 
-        assertFalse(board.getCell(new Point(3, 3)).alive());
+        assertFalse(grid.getCell(new Point(3, 3)).alive());
     }
 }
