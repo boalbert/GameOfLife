@@ -2,32 +2,32 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Board {
-    private final Cell[][] cells;
+    private final Cell[][] cellGrid;
     private final int rows;
     private final int columns;
 
     public Board(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        this.cells = createCells();
+        this.cellGrid = createCells();
     }
 
-    public int rows() {
+    public int numberOfRows() {
         return rows;
     }
 
-    public int cols() {
+    public int numberOfColumns() {
         return columns;
     }
 
     public boolean isAlive(int row, int col) {
-        return cells[row][col].alive();
+        return cellGrid[row][col].alive();
     }
 
     private Cell[][] createCells() {
         Cell[][] cells = new Cell[rows][columns];
-        for (int rowIndex = 0; rowIndex < rows(); rowIndex++) {
-            for (int columnIndex = 0; columnIndex < cols(); columnIndex++) {
+        for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
+            for (int columnIndex = 0; columnIndex < numberOfColumns(); columnIndex++) {
                 cells[rowIndex][columnIndex] = new Cell(false);
             }
         }
@@ -35,15 +35,15 @@ public class Board {
     }
 
     public void insertLivingCell(int row, int col) {
-        cells[row][col] = new Cell(true);
+        cellGrid[row][col] = new Cell(true);
     }
 
     public void insertDeadCell(int row, int col) {
-        cells[row][col] = new Cell(false);
+        cellGrid[row][col] = new Cell(false);
     }
 
     public Cell getCell(int row, int col) {
-        return cells[row][col];
+        return cellGrid[row][col];
     }
 
     public List<Cell> getNeighbours(int row, int col) {
@@ -75,12 +75,12 @@ public class Board {
     }
 
     private boolean[][] calculateNextState() {
-        boolean[][] nextState = new boolean[rows()][cols()];
+        boolean[][] nextState = new boolean[numberOfRows()][numberOfColumns()];
 
         // Loop through every row
-        for (int rowIndex = 0; rowIndex < rows(); rowIndex++) {
+        for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
             // Loop trough every column
-            for (int colIndex = 0; colIndex < cols(); colIndex++) {
+            for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
 
                 Cell cell = getCell(rowIndex, colIndex);
                 int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);
@@ -94,10 +94,10 @@ public class Board {
     }
 
     public boolean[][] calculateNextGeneration() {
-        boolean[][] nextState = new boolean[rows()][cols()];
+        boolean[][] nextState = new boolean[numberOfRows()][numberOfColumns()];
 
-        for (int rowIndex = 0; rowIndex < rows(); rowIndex++) {
-            for (int colIndex = 0; colIndex < cols(); colIndex++) {
+        for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
+            for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
 
                 var currentCell = getCell(rowIndex, colIndex);
                 int aliveNeighbours = getAliveNeighbours(rowIndex, colIndex);

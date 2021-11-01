@@ -60,7 +60,7 @@ class GameOfLifeTest {
     @Test
     void GivenANewGameOfLifeObjectWith5RowsReturnsObjectWithAGridOfFiveRows() {
         GameOfLife gameOfLife = new GameOfLife(5, 5);
-        assertEquals(5, gameOfLife.board().rows());
+        assertEquals(5, gameOfLife.board().numberOfRows());
     }
 
     @Test
