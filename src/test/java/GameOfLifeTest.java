@@ -18,7 +18,6 @@ class GameOfLifeTest {
 
     @Test
     void GivenPointAtEdgeReturnsTrue() {
-        Grid grid = new Grid(12, 12);
         var onEdge = new Point(12, 12);
         assertFalse(onEdge.isInside(12, 12));
     }
@@ -155,7 +154,6 @@ class GameOfLifeTest {
 
         grid.insertLivingCell(new Point(5, 4));
         grid.insertLivingCell(new Point(4, 5));
-        grid.insertLivingCell(new Point(6, 5));
         grid.insertLivingCell(new Point(6, 5));
 
         boolean[][] aliveCells = grid.calculateNextGeneration();

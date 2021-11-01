@@ -48,19 +48,17 @@ public class Grid {
     }
 
     public boolean[][] calculateNextGeneration() {
-        boolean[][] nextGrid = new boolean[numberOfRows()][numberOfColumns()];
+        boolean[][] nextGeneration = new boolean[numberOfRows()][numberOfColumns()];
+
 
         for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
             for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
-
                 var currentPoint = new Point(rowIndex, colIndex);
                 var currentCell = findCell(currentPoint);
-
-                nextGrid[rowIndex][colIndex] = isSurvivor(currentPoint, currentCell);
-
+                nextGeneration[rowIndex][colIndex] = isSurvivor(currentPoint, currentCell);
             }
         }
-        return nextGrid;
+        return nextGeneration;
     }
 
     public boolean isSurvivor(Point point, Cell cell) {
@@ -74,6 +72,4 @@ public class Grid {
 
         return false;
     }
-
-
 }
