@@ -127,9 +127,9 @@ class GameOfLifeTest {
         Grid grid = new Grid(12, 12);
 
         grid.insertLivingCell(new Point(5, 5));
+        grid.goToNextGeneration();
 
-        boolean[][] aliveCells = grid.calculateNextGeneration();
-        assertFalse(aliveCells[3][3]);
+        assertFalse(grid.findCell(new Point(3, 3)).alive());
     }
 
     @Test
@@ -143,9 +143,10 @@ class GameOfLifeTest {
         grid.insertLivingCell(new Point(2, 4));
         grid.insertLivingCell(new Point(3, 2));
 
-        boolean[][] aliveCells = grid.calculateNextGeneration();
 
-        assertFalse(aliveCells[3][3]);
+        grid.goToNextGeneration();
+
+        assertFalse(grid.findCell(new Point(5, 5)).alive());
     }
 
     @Test
@@ -156,8 +157,37 @@ class GameOfLifeTest {
         grid.insertLivingCell(new Point(4, 5));
         grid.insertLivingCell(new Point(6, 5));
 
-        boolean[][] aliveCells = grid.calculateNextGeneration();
+        grid.goToNextGeneration();
 
-        assertTrue(aliveCells[5][5]);
+        assertTrue(grid.findCell(new Point(5, 5)).alive());
+    }
+
+    @Test
+    void DeadCellWithThreeAliveNeighboursIsInsertedIntoCellsInTheNextGeneration() {
+        Grid grid = new Grid(12, 12);
+
+        grid.insertLivingCell(new Point(5, 4));
+        grid.insertLivingCell(new Point(4, 5));
+        grid.insertLivingCell(new Point(6, 5));
+
+        grid.goToNextGeneration();
+
+        assertTrue(grid.findCell(new Point(5, 5)).alive());
+    }
+
+    @Test
+    void AliveCellWithMoreThanThreeNeighboursIsDeadInNextGeneration() {
+        Grid grid = new Grid(8, 8);
+
+        grid.insertLivingCell(new Point(3, 3));
+
+        grid.insertLivingCell(new Point(2, 2));
+        grid.insertLivingCell(new Point(2, 3));
+        grid.insertLivingCell(new Point(2, 4));
+        grid.insertLivingCell(new Point(3, 2));
+
+        grid.goToNextGeneration();
+
+        assertFalse(grid.findCell(new Point(3, 3)).alive());
     }
 }

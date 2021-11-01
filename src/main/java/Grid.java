@@ -6,7 +6,11 @@ public class Grid {
     public Grid(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        this.cells = createCells();
+        this.cells = initializeGridWithDeadCells();
+    }
+
+    public Cell[][] getCells() {
+        return cells;
     }
 
     public int numberOfRows() {
@@ -17,8 +21,9 @@ public class Grid {
         return columns;
     }
 
-    private Cell[][] createCells() {
-        Cell[][] cells = new Cell[rows][columns];
+    private Cell[][] initializeGridWithDeadCells() {
+        Cell[][] cells = new Cell[numberOfRows()][numberOfColumns()];
+
         for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
             for (int columnIndex = 0; columnIndex < numberOfColumns(); columnIndex++) {
                 cells[rowIndex][columnIndex] = new Cell(false);
@@ -47,9 +52,8 @@ public class Grid {
                 .count();
     }
 
-    public boolean[][] calculateNextGeneration() {
+    private boolean[][] calculateNextGeneration() {
         boolean[][] nextGeneration = new boolean[numberOfRows()][numberOfColumns()];
-
 
         for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
             for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
@@ -61,7 +65,7 @@ public class Grid {
         return nextGeneration;
     }
 
-    public boolean isSurvivor(Point point, Cell cell) {
+    private boolean isSurvivor(Point point, Cell cell) {
         int aliveNeighbours = countAliveNeighbours(point);
 
         if (cell.alive() &&
@@ -72,4 +76,17 @@ public class Grid {
 
         return false;
     }
+
+    private void insertNextGenerationInBoard(boolean[][] nextGeneration) {
+        for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
+            for (int columnIndex = 0; columnIndex < numberOfColumns(); columnIndex++) {
+                cells[rowIndex][columnIndex] = new Cell(nextGeneration[rowIndex][columnIndex]);
+            }
+        }
+    }
+
+    public void goToNextGeneration() {
+        insertNextGenerationInBoard(calculateNextGeneration());
+    }
+
 }
