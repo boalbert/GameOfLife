@@ -54,7 +54,7 @@ class GameOfLifeTest {
     void GridTilesAreInitializedToZero() {
         Grid grid = new Grid(8, 8);
         var point = new Point(5, 5);
-        assertFalse(grid.getCell(point).alive());
+        assertFalse(grid.findCell(point).alive());
     }
 
     @Test
@@ -62,7 +62,7 @@ class GameOfLifeTest {
         Grid grid = new Grid(6, 6);
         var point = new Point(2, 2);
         grid.insertLivingCell(point);
-        assertTrue(grid.getCell(point).alive());
+        assertTrue(grid.findCell(point).alive());
     }
 
 
@@ -120,7 +120,7 @@ class GameOfLifeTest {
         grid.insertLivingCell(point);
         grid.insertDeadCell(point);
 
-        assertFalse(grid.getCell(point).alive());
+        assertFalse(grid.findCell(point).alive());
     }
 
     @Test
@@ -128,8 +128,9 @@ class GameOfLifeTest {
         Grid grid = new Grid(12, 12);
 
         grid.insertLivingCell(new Point(5, 5));
-        boolean[][] booleans = grid.calculateNextGeneration();
-        assertFalse(booleans[3][3]);
+
+        boolean[][] aliveCells = grid.calculateNextGeneration();
+        assertFalse(aliveCells[3][3]);
     }
 
     @Test
@@ -143,8 +144,22 @@ class GameOfLifeTest {
         grid.insertLivingCell(new Point(2, 4));
         grid.insertLivingCell(new Point(3, 2));
 
-        boolean[][] booleans = grid.calculateNextGeneration();
+        boolean[][] aliveCells = grid.calculateNextGeneration();
 
-        assertFalse(booleans[3][3]);
+        assertFalse(aliveCells[3][3]);
+    }
+
+    @Test
+    void DeadCellWithThreeAliveNeighboursBecomesALiveCellInTheNextGeneration() {
+        Grid grid = new Grid(12, 12);
+
+        grid.insertLivingCell(new Point(5, 4));
+        grid.insertLivingCell(new Point(4, 5));
+        grid.insertLivingCell(new Point(6, 5));
+        grid.insertLivingCell(new Point(6, 5));
+
+        boolean[][] aliveCells = grid.calculateNextGeneration();
+
+        assertTrue(aliveCells[5][5]);
     }
 }
