@@ -1,2 +1,2 @@
-public record Point() {
+public record Point(int row, int col) {
 }

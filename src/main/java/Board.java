@@ -20,10 +20,6 @@ public class Board {
         return columns;
     }
 
-    public boolean isAlive(int row, int col) {
-        return cellGrid[row][col].alive();
-    }
-
     private Cell[][] createCells() {
         Cell[][] cells = new Cell[rows][columns];
         for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {

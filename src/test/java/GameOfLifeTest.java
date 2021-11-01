@@ -8,14 +8,14 @@ class GameOfLifeTest {
     @Test
     void BoardTilesAreInitializedToZero() {
         Board board = new Board(8, 8);
-        assertFalse(board.isAlive(5, 5));
+        assertFalse(board.getCell(5, 5).alive());
     }
 
     @Test
     void SettingCellAliveReturnsTrueWhenCheckingIsAliveOnCell() {
         Board board = new Board(6, 6);
         board.insertLivingCell(2, 2);
-        assertTrue(board.isAlive(2, 2));
+        assertTrue(board.getCell(2, 2).alive());
     }
 
     @Test
@@ -69,7 +69,7 @@ class GameOfLifeTest {
 
         board.insertLivingCell(3, 3);
         board.insertDeadCell(3, 3);
-        assertFalse(board.isAlive(3, 3));
+        assertFalse(board.getCell(3, 3).alive());
     }
 
     @Test
@@ -96,6 +96,6 @@ class GameOfLifeTest {
 
         board.calculateNextGeneration();
 
-        assertFalse(board.isAlive(3, 3));
+        assertFalse(board.getCell(3, 3).alive());
     }
 }
