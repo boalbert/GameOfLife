@@ -1,3 +1,5 @@
+package se.boalbert;
+
 public class Grid {
     private final Cell[][] cells;
     private final int rows;
@@ -7,10 +9,6 @@ public class Grid {
         this.rows = rows;
         this.columns = columns;
         this.cells = initializeGridWithDeadCells();
-    }
-
-    public Cell[][] getCells() {
-        return cells;
     }
 
     public int numberOfRows() {

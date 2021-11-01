@@ -1,3 +1,5 @@
+package se.boalbert;
+
 public class GameOfLife {
     private final Grid grid;
 

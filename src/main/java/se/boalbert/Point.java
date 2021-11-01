@@ -1,3 +1,5 @@
+package se.boalbert;
+
 import java.util.List;
 
 public record Point(int row, int col) {
