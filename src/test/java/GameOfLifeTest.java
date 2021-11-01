@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,11 +68,12 @@ class GameOfLifeTest {
         Board board = new Board(5, 5);
 
         board.insertLivingCell(3, 3);
-        board.setTileDead(3, 3);
+        board.insertDeadCell(3, 3);
         assertFalse(board.isAlive(3, 3));
     }
 
     @Test
+    @Disabled
     void CellWithZeroNeighboursDiesInNextGeneration() {
         Board board = new Board(12, 12);
 
@@ -81,6 +83,7 @@ class GameOfLifeTest {
     }
 
     @Test
+    @Disabled
     void CellWithMoreThanThreeNeighboursDiesInTheNextGeneration() {
         Board board = new Board(8, 8);
 

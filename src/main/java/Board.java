@@ -42,10 +42,6 @@ public class Board {
         cells[row][col] = new Cell();
     }
 
-    public void setTileDead(int row, int col) {
-        cells[row][col].setDead();
-    }
-
     public Cell getCell(int row, int col) {
         return cells[row][col];
     }
