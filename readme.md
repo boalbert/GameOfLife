@@ -1,3 +1,6 @@
+#Game of Life
+## Instructions
+
 1. Build
 
 ```
