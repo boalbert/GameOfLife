@@ -20,14 +20,14 @@ public class Grid {
     }
 
     private Cell[][] initializeGridWithDeadCells() {
-        Cell[][] cells = new Cell[numberOfRows()][numberOfColumns()];
+        Cell[][] newGrid = new Cell[numberOfRows()][numberOfColumns()];
 
         for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
             for (int columnIndex = 0; columnIndex < numberOfColumns(); columnIndex++) {
-                cells[rowIndex][columnIndex] = new Cell(false);
+                newGrid[rowIndex][columnIndex] = new Cell(false);
             }
         }
-        return cells;
+        return newGrid;
     }
 
     public void insertLivingCell(Point point) {
@@ -69,10 +69,8 @@ public class Grid {
         if (cell.alive() &&
                 (aliveNeighbours == 2 || aliveNeighbours == 3)) return true;
 
-        if (!cell.alive()
-                && aliveNeighbours == 3) return true;
-
-        return false;
+        return !cell.alive()
+                && aliveNeighbours == 3;
     }
 
     private void insertNextGenerationInBoard(boolean[][] nextGeneration) {
