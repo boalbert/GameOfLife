@@ -57,13 +57,13 @@ public class Grid {
             for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
                 var currentPoint = new Point(rowIndex, colIndex);
                 var currentCell = findCell(currentPoint);
-                nextGeneration[rowIndex][colIndex] = isSurvivor(currentPoint, currentCell);
+                nextGeneration[rowIndex][colIndex] = isAliveNextGeneration(currentPoint, currentCell);
             }
         }
         return nextGeneration;
     }
 
-    private boolean isSurvivor(Point point, Cell cell) {
+    private boolean isAliveNextGeneration(Point point, Cell cell) {
         int aliveNeighbours = countAliveNeighbours(point);
 
         if (cell.alive() &&
