@@ -1,5 +1,7 @@
 package se.boalbert;
 
+import java.util.Random;
+
 public class Grid {
     private final Cell[][] cells;
     private final int rows;
@@ -9,6 +11,10 @@ public class Grid {
         this.rows = rows;
         this.columns = columns;
         this.cells = initializeGridWithDeadCells();
+    }
+
+    public Cell[][] getCells() {
+        return cells;
     }
 
     public int numberOfRows() {
@@ -83,6 +89,24 @@ public class Grid {
 
     public void goToNextGeneration() {
         insertNextGenerationInBoard(calculateNextGeneration());
+    }
+
+    public void printGrid(char cellSymbol) {
+        for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
+            for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
+                Point point = new Point(rowIndex, colIndex);
+                if (findCell(point).alive()) System.out.print(cellSymbol);
+                else System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void randomStartBoard(Random random) {
+        for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++)
+            for (int columnIndex = 0; columnIndex < numberOfColumns(); columnIndex++) {
+                cells[rowIndex][columnIndex] = new Cell(random.nextBoolean());
+            }
     }
 
 }

@@ -106,11 +106,6 @@ class GameOfLifeTest {
         assertEquals(0, grid.countAliveNeighbours(new Point(3, 3)));
     }
 
-    @Test
-    void GivenANewGameOfLifeObjectWith5RowsReturnsObjectWithAGridOfFiveRows() {
-        GameOfLife gameOfLife = new GameOfLife(5, 5);
-        assertEquals(5, gameOfLife.grid().numberOfRows());
-    }
 
     @Test
     void GivenAliveCellAndSettingItDeadShouldMakeTileDead() {
