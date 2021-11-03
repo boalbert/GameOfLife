@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'commons-cli:commons-cli:1.5.0'
 }
 
 test {
@@ -21,5 +22,20 @@ test {
 jar {
     manifest {
         attributes 'Main-Class': 'se.boalbert.GameOfLife'
+    }
+}
+
+tasks.register('uberJar', Jar) {
+    manifest {
+        attributes 'Main-Class': 'se.boalbert.GameOfLife'
+    }
+
+    archiveClassifier = 'uber'
+
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
     }
 }

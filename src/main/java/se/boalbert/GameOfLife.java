@@ -1,101 +1,118 @@
 package se.boalbert;
 
+import org.apache.commons.cli.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public record GameOfLife() {
-    final static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to Game of Life");
-        menu();
-    }
+    public static void main(String[] args) throws ParseException {
+        Options options = setupCommandLineOptions();
+        CommandLineParser commandLineParser = new DefaultParser();
+        CommandLine cmd = commandLineParser.parse(options, args);
 
-    static void menu() {
-        String greeting = """
-                - Press (1) to start the game.
-                - Press (2) to show the rules.""";
-        System.out.println(greeting);
-        startMenu();
+        int generations = 20;
+        Grid defaultGrid = new Grid(20, 20);
 
-    }
 
-    static void rules() {
-        String rules = """
-                Rules:
-                1. Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
-                2. Any live cell with more than three live neighbours dies, as if by overcrowding.
-                3. Any live cell with two or three live neighbours lives on to the next generation.
-                4. Any dead cell with exactly three live neighbours becomes a live cell.""";
-        System.out.println(rules);
-        startMenu();
-    }
-
-    static void startMenu() {
-        int userInput = scanner.nextInt();
-        switch (userInput) {
-            case 1 -> enterSizeOfGrid();
-            case 2 -> rules();
+        if (cmd.hasOption("g")) {
+            System.out.println("-g --generations entered");
+            generations = parseGenerations(cmd);
         }
-    }
 
-    private static void enterSizeOfGrid() {
-        System.out.println("Enter size of grid.");
-        System.out.print("Rows: ");
-        final int rows = scanner.nextInt();
-
-        System.out.print("Columns: ");
-        final int columns = scanner.nextInt();
-
-        selectRandomOrManualStartingBoard(new Grid(rows, columns));
-    }
-
-    private static void selectRandomOrManualStartingBoard(Grid grid) {
-        System.out.println("(1) Generate random board");
-        System.out.println("(2) Manual input");
-        int choice = scanner.nextInt();
-        switch (choice) {
-            case 1 -> randomBoard(grid);
-            case 2 -> manualInput(grid);
+        if (cmd.hasOption("s")) {
+            System.out.println("-s --size entered");
+            parseSize(cmd);
+            defaultGrid = parseSize(cmd);
         }
-    }
 
-    private static void manualInput(Grid grid) {
-
-        String continueInput = "Y";
-
-        while (continueInput.equalsIgnoreCase("Y")) {
-            insertPoint(grid);
-            System.out.print("Continue? (Y/N): ");
-            continueInput = scanner.next();
+        if (cmd.hasOption("r")) {
+            System.out.println("-r chosen, random start board");
+            defaultGrid.randomStartBoard(new Random());
         }
-        enterNumberOfGenerations(grid);
-    }
 
-    private static void enterNumberOfGenerations(Grid grid) {
-        System.out.print("Enter number of generations to simulate: ");
-        int numberOfGenerations = scanner.nextInt();
-        printGenerations(numberOfGenerations, grid);
-    }
+        if (cmd.hasOption("p")) {
+            String argPoints = cmd.getOptionValue("p");
+            var splitPoints = argPoints.split(",");
+            List<Point> insertThesePoints = parsePoints(splitPoints);
+            insertThesePoints.forEach(defaultGrid::insertLivingCell);
 
-    private static void insertPoint(Grid grid) {
-        System.out.print("Row: ");
-        int row = scanner.nextInt();
-        System.out.print("Col: ");
-        int col = scanner.nextInt();
-
-        var chosenPoint = new Point(row, col);
-
-        if (chosenPoint.isInside(grid.numberOfRows(), grid.numberOfColumns())) {
-            grid.insertLivingCell(chosenPoint);
-        } else {
-            System.out.println("Error: You can't insert points outside grid.");
         }
+
+        if (cmd.hasOption("h")) {
+            HelpFormatter helpFormatter = new HelpFormatter();
+            helpFormatter.printHelp("game of life", "defualt values: grid 20x20, random startingcells, 20 generations", options, "footer", false);
+        }
+
+        printGenerations(generations, defaultGrid);
+
     }
 
-    private static void randomBoard(Grid grid) {
-        grid.randomStartBoard(new Random());
-        enterNumberOfGenerations(grid);
+    private static Grid parseSize(CommandLine cmd) {
+
+        String sizeString = cmd.getOptionValue("s");
+        var size = sizeString.split("\\.");
+
+        int rows = parseSizeInput(size, 0);
+        int columns = parseSizeInput(size, 1);
+
+        return new Grid(rows, columns);
+    }
+
+    private static int parseGenerations(CommandLine cmd) {
+        String generationString = cmd.getOptionValue("g");
+        System.out.println("-g chosen, specified count of generations: " + generationString);
+
+        return Integer.parseInt(generationString);
+
+    }
+
+
+    private static List<Point> parsePoints(String[] split) {
+        List<Point> insertThesePoints = new ArrayList<>();
+        for (String s : split) {
+            var rowAndCol = s.split("\\.");
+            int pointAtRow = Integer.parseInt(rowAndCol[0]);
+            int pointAtCol = Integer.parseInt(rowAndCol[1]);
+            Point point = new Point(pointAtRow, pointAtCol);
+            insertThesePoints.add(point);
+        }
+        return insertThesePoints;
+    }
+
+    static int parseSizeInput(String[] split, int i) {
+        int rows;
+        rows = Integer.parseInt(split[i]);
+        return rows;
+    }
+
+
+    static Options setupCommandLineOptions() {
+        Options options = new Options();
+        Option generation = Option.builder("g")
+                .argName("number")
+                .longOpt("generation")
+                .hasArg()
+                .desc("number of generations to simulate")
+                .build();
+        options.addOption(generation);
+        options.addOption("r", "random", false, "run with random start values");
+        options.addOption("h", "help", false, "print help");
+        options.addOption("s", "size", true, "set size of grid via 'rows,columns', separated by .");
+        options.addOption("p", "point", true, "insert point at coordinare, separated by ., example: -p 20.20,12.12,11.11");
+        return options;
+    }
+
+    static Grid returnGridWithDefaultValues() {
+        int defaultRows = 20;
+        int defaultColumns = 20;
+
+        Grid defaultGrid = new Grid(defaultRows, defaultColumns);
+        defaultGrid.randomStartBoard(new Random());
+
+        return defaultGrid;
     }
 
     private static void printGenerations(int numberOfGenerations, Grid grid) {
@@ -108,8 +125,8 @@ public record GameOfLife() {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
-        System.out.println("Simulation over.");
     }
 }
