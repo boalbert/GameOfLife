@@ -106,19 +106,6 @@ class GameOfLifeTest {
         assertEquals(0, grid.countAliveNeighbours(new Point(3, 3)));
     }
 
-
-    @Test
-    void GivenAliveCellAndSettingItDeadShouldMakeTileDead() {
-        Grid grid = new Grid(5, 5);
-
-        var point = new Point(3, 3);
-
-        grid.insertLivingCell(point);
-        grid.insertDeadCell(point);
-
-        assertFalse(grid.findCell(point).alive());
-    }
-
     @Test
     void CellWithZeroNeighboursDiesInNextGeneration() {
         Grid grid = new Grid(12, 12);
