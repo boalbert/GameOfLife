@@ -52,7 +52,7 @@ class GameOfLifeTest {
     }
 
     @Test
-    void GridTilesAreInitializedToZero() {
+    void GridTilesAreInitializedToDead() {
         Grid grid = new Grid(8, 8);
         var point = new Point(5, 5);
         assertFalse(grid.findCell(point).alive());

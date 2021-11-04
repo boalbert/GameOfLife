@@ -13,10 +13,6 @@ public class Grid {
         this.cells = initializeGridWithDeadCells();
     }
 
-    public Cell[][] getCells() {
-        return cells;
-    }
-
     public int numberOfRows() {
         return rows;
     }
@@ -56,6 +52,7 @@ public class Grid {
                 .count();
     }
 
+    //todo ändra till grid
     private boolean[][] calculateNextGeneration() {
         boolean[][] nextGeneration = new boolean[numberOfRows()][numberOfColumns()];
 
