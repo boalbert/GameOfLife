@@ -19,12 +19,6 @@ test {
     useJUnitPlatform()
 }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'se.boalbert.GameOfLife'
-    }
-}
-
 tasks.register('uberJar', Jar) {
     manifest {
         attributes 'Main-Class': 'se.boalbert.GameOfLife'
