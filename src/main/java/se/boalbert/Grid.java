@@ -3,9 +3,9 @@ package se.boalbert;
 import java.util.Random;
 
 public class Grid {
-    private final Cell[][] cells;
     private final int rows;
     private final int columns;
+    private Cell[][] cells;
 
     public Grid(int rows, int columns) {
         this.rows = rows;
@@ -36,10 +36,6 @@ public class Grid {
         cells[point.row()][point.col()] = new Cell(true);
     }
 
-    public void insertDeadCell(Point point) {
-        cells[point.row()][point.col()] = new Cell(false);
-    }
-
     public Cell findCell(Point point) {
         return cells[point.row()][point.col()];
     }
@@ -52,40 +48,33 @@ public class Grid {
                 .count();
     }
 
-    //todo ändra till grid
-    private boolean[][] calculateNextGeneration() {
-        boolean[][] nextGeneration = new boolean[numberOfRows()][numberOfColumns()];
+    private Cell[][] calculateNextGeneration() {
+        Cell[][] nextGenerationOfCells = new Cell[numberOfRows()][numberOfColumns()];
 
         for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
             for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
+
                 var currentPoint = new Point(rowIndex, colIndex);
                 var currentCell = findCell(currentPoint);
-                nextGeneration[rowIndex][colIndex] = isAliveNextGeneration(currentPoint, currentCell);
+
+                nextGenerationOfCells[rowIndex][colIndex] = isAliveNextGeneration(currentPoint, currentCell);
             }
         }
-        return nextGeneration;
+        return nextGenerationOfCells;
     }
 
-    private boolean isAliveNextGeneration(Point point, Cell cell) {
+    private Cell isAliveNextGeneration(Point point, Cell cell) {
         int aliveNeighbours = countAliveNeighbours(point);
 
-        if (cell.alive() &&
-                (aliveNeighbours == 2 || aliveNeighbours == 3)) return true;
+        if (cell.alive() && (aliveNeighbours == 2 || aliveNeighbours == 3)) return new Cell(true);
 
-        return !cell.alive()
-                && aliveNeighbours == 3;
-    }
+        if (!cell.alive() && aliveNeighbours == 3) return new Cell(true);
 
-    private void insertNextGenerationInBoard(boolean[][] nextGeneration) {
-        for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
-            for (int columnIndex = 0; columnIndex < numberOfColumns(); columnIndex++) {
-                cells[rowIndex][columnIndex] = new Cell(nextGeneration[rowIndex][columnIndex]);
-            }
-        }
+        return new Cell(false);
     }
 
     public void goToNextGeneration() {
-        insertNextGenerationInBoard(calculateNextGeneration());
+        cells = calculateNextGeneration();
     }
 
     public void printGrid() {
