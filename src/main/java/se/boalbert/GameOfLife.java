@@ -2,11 +2,14 @@ package se.boalbert;
 
 import org.apache.commons.cli.ParseException;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public record GameOfLife() {
-    public static void main(String[] args) {
+    static final int STANDARD_GENERATIONS_20 = 20;
 
+    public static void main(String[] args) {
+        System.out.println(Arrays.toString(args));
         Grid standardGrid = new Grid(40, 50);
 
         if (args.length > 0) {
@@ -23,24 +26,25 @@ public record GameOfLife() {
                 }
             } catch (ParseException e) {
                 printErrorMessage(e);
+                System.exit(0);
             }
         } else {
-            standardGrid.randomStartBoard(new Random());
-            printBoard(20, standardGrid);
+            standardGrid = standardGrid.randomGrid(new Random());
+            printBoard(STANDARD_GENERATIONS_20, standardGrid);
         }
     }
 
     private static void printErrorMessage(ParseException e) {
         System.out.println(e.getMessage());
         System.out.println("run with -h (--help) for more info");
-        System.exit(0);
     }
 
     private static void printBoard(int numberOfGenerations, Grid grid) {
         for (int i = 0; i < numberOfGenerations; i++) {
             System.out.print("\033\143");
             grid.printGrid();
-            grid.goToNextGeneration();
+
+            grid = grid.goToNextGeneration();
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

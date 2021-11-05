@@ -2,6 +2,7 @@
 
 - Game of Life simulation with CLI interface.
 - Build the .jar and run with parameters below.
+- Note: Uses Java 16 language features.
 
 ### Instructions
 

@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Random;
 
 public class CmdLineAction {
-    private static final CommandLineParser commandLineParser = new DefaultParser();
-
-    private static final Options options = setupCommandLineOptions();
     private static final int STANDARD_GENERATIONS = 20;
+    private static final CommandLineParser commandLineParser = new DefaultParser();
+    private static final Options options = setupCommandLineOptions();
+
     private final CommandLine cmd;
     private Grid modifiedGrid;
 
@@ -58,15 +58,15 @@ public class CmdLineAction {
             modifiedGrid = parseGridSize(sizeString);
         }
 
-        if (cmd.hasOption("r")) {
-            modifiedGrid.randomStartBoard(new Random());
-        } else if (cmd.hasOption("p")) {
+        if (cmd.hasOption("p")) {
             String argPoints = cmd.getOptionValue("p");
             var splitPoints = argPoints.split(",");
             List<Point> insertThesePoints = parseGridPoints(splitPoints);
             insertThesePoints.forEach(modifiedGrid::insertLivingCell);
-        } else {
-            modifiedGrid.randomStartBoard(new Random());
+        }
+
+        if (cmd.hasOption("r")) {
+            modifiedGrid = modifiedGrid.randomGrid(new Random());
         }
 
         return modifiedGrid;
@@ -97,7 +97,8 @@ public class CmdLineAction {
     private Grid parseGridSize(String sizeString) {
         var sizeArgument = sizeString.split("\\.");
 
-        int rows = Integer.parseInt(sizeArgument[0]);
+
+        int rows = Integer.parseInt(sizeArgument[0].trim());
         int columns = Integer.parseInt(sizeArgument[1]);
 
         return new Grid(rows, columns);
