@@ -18,6 +18,8 @@ runs a simulation of Conways Game of Life with specified parameters
 default values: 20 generations, 40x50 grid, random starting board
 ```
 
+![Example GoL Simulation](https://raw.githubusercontent.com/boalbert/GameOfLife/master/gol.gif)
+
 **Example**
 
 - Create a grid with 50 rows, 40 columns. Random starting board. Simulate 30 generations.
