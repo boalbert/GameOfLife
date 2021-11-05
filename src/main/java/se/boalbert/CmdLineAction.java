@@ -60,13 +60,13 @@ public class CmdLineAction {
 
         if (cmd.hasOption("r")) {
             modifiedGrid.randomStartBoard(new Random());
-        }
-
-        if (cmd.hasOption("p")) {
+        } else if (cmd.hasOption("p")) {
             String argPoints = cmd.getOptionValue("p");
             var splitPoints = argPoints.split(",");
             List<Point> insertThesePoints = parseGridPoints(splitPoints);
             insertThesePoints.forEach(modifiedGrid::insertLivingCell);
+        } else {
+            modifiedGrid.randomStartBoard(new Random());
         }
 
         return modifiedGrid;

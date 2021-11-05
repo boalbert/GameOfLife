@@ -2,24 +2,31 @@ package se.boalbert;
 
 import org.apache.commons.cli.ParseException;
 
+import java.util.Random;
+
 public record GameOfLife() {
     public static void main(String[] args) {
 
         Grid standardGrid = new Grid(40, 50);
 
-        try {
-            var cmdLineAction = new CmdLineAction(args, standardGrid);
+        if (args.length > 0) {
+            try {
+                var cmdLineAction = new CmdLineAction(args, standardGrid);
 
-            if (cmdLineAction.helpArgumentSupplied()) {
-                cmdLineAction.printHelpText();
-            } else {
-                standardGrid = cmdLineAction.setGridProperties();
-                int numberOfGenerations = cmdLineAction.setGenerations();
+                if (cmdLineAction.helpArgumentSupplied()) {
+                    cmdLineAction.printHelpText();
+                } else {
+                    standardGrid = cmdLineAction.setGridProperties();
+                    int numberOfGenerations = cmdLineAction.setGenerations();
 
-                printBoard(numberOfGenerations, standardGrid);
+                    printBoard(numberOfGenerations, standardGrid);
+                }
+            } catch (ParseException e) {
+                printErrorMessage(e);
             }
-        } catch (ParseException e) {
-            printErrorMessage(e);
+        } else {
+            standardGrid.randomStartBoard(new Random());
+            printBoard(20, standardGrid);
         }
     }
 

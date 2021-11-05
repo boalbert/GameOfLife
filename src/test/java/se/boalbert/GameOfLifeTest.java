@@ -7,51 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameOfLifeTest {
 
     @Test
-    void GivenPointInTheMiddleOfGridReturnsTrue() {
-        var inTheMiddle = new Point(5, 5);
-        assertTrue(inTheMiddle.isInside(12, 12));
-    }
-
-    @Test
-    void GivenPointOutsideGridReturnsFalse() {
-        var outside = new Point(14, 14);
-        assertFalse(outside.isInside(12, 12));
-    }
-
-    @Test
-    void GivenPointAtEdgeReturnsTrue() {
-        var onEdge = new Point(12, 12);
-        assertFalse(onEdge.isInside(12, 12));
-    }
-
-    @Test
-    void PointHasEightNeighbours() {
-        Point point = new Point(5, 5);
-        assertEquals(8, point.neighbours(point).size());
-    }
-
-    @Test
-    void PointInTheMiddleOfGridHasEightNeighboursInsideGrid() {
-        Grid grid = new Grid(12, 12);
-        Point point = new Point(5, 5);
-        assertEquals(8, point.neighboursInsideGrid(point, grid.numberOfRows(), grid.numberOfColumns()).size());
-    }
-
-    @Test
-    void PointAtEdgeHasFiveNeighbours() {
-        Grid grid = new Grid(12, 12);
-        Point point = new Point(0, 5);
-        assertEquals(5, point.neighboursInsideGrid(point, grid.numberOfRows(), grid.numberOfColumns()).size());
-    }
-
-    @Test
-    void PointInCornerHasThreeNeighbours() {
-        Grid grid = new Grid(12, 12);
-        Point point = new Point(0, 0);
-        assertEquals(3, point.neighboursInsideGrid(point, grid.numberOfRows(), grid.numberOfColumns()).size());
-    }
-
-    @Test
     void GridTilesAreInitializedToDead() {
         Grid grid = new Grid(8, 8);
         var point = new Point(5, 5);
@@ -104,6 +59,51 @@ class GameOfLifeTest {
         grid.insertLivingCell(new Point(0, 0));
 
         assertEquals(0, grid.countAliveNeighbours(new Point(3, 3)));
+    }
+
+    @Test
+    void GivenPointInTheMiddleOfGridReturnsTrue() {
+        var inTheMiddle = new Point(5, 5);
+        assertTrue(inTheMiddle.isInside(12, 12));
+    }
+
+    @Test
+    void GivenPointOutsideGridReturnsFalse() {
+        var outside = new Point(14, 14);
+        assertFalse(outside.isInside(12, 12));
+    }
+
+    @Test
+    void GivenPointAtEdgeReturnsTrue() {
+        var onEdge = new Point(12, 12);
+        assertFalse(onEdge.isInside(12, 12));
+    }
+
+    @Test
+    void PointHasEightNeighbours() {
+        Point point = new Point(5, 5);
+        assertEquals(8, point.neighbours(point).size());
+    }
+
+    @Test
+    void PointInTheMiddleOfGridHasEightNeighboursInsideGrid() {
+        Grid grid = new Grid(12, 12);
+        Point point = new Point(5, 5);
+        assertEquals(8, point.neighboursInsideGrid(point, grid.numberOfRows(), grid.numberOfColumns()).size());
+    }
+
+    @Test
+    void PointAtEdgeHasFiveNeighbours() {
+        Grid grid = new Grid(12, 12);
+        Point point = new Point(0, 5);
+        assertEquals(5, point.neighboursInsideGrid(point, grid.numberOfRows(), grid.numberOfColumns()).size());
+    }
+
+    @Test
+    void PointInCornerHasThreeNeighbours() {
+        Grid grid = new Grid(12, 12);
+        Point point = new Point(0, 0);
+        assertEquals(3, point.neighboursInsideGrid(point, grid.numberOfRows(), grid.numberOfColumns()).size());
     }
 
     @Test

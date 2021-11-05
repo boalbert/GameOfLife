@@ -32,12 +32,12 @@ public class Grid {
         return newGrid;
     }
 
-    public void insertLivingCell(Point point) {
-        cells[point.row()][point.col()] = new Cell(true);
-    }
-
     public Cell findCell(Point point) {
         return cells[point.row()][point.col()];
+    }
+
+    public void insertLivingCell(Point point) {
+        cells[point.row()][point.col()] = new Cell(true);
     }
 
     public int countAliveNeighbours(Point point) {
