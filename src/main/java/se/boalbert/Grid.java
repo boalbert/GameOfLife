@@ -80,9 +80,7 @@ public class Grid {
     public void printGrid() {
         for (int rowIndex = 0; rowIndex < numberOfRows(); rowIndex++) {
             for (int colIndex = 0; colIndex < numberOfColumns(); colIndex++) {
-                Point point = new Point(rowIndex, colIndex);
-                if (findCell(point).alive()) System.out.print("*");
-                else System.out.print(" ");
+                System.out.print(findCell(new Point(rowIndex, colIndex)));
             }
             System.out.println();
         }
